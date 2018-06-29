@@ -33,7 +33,7 @@ if [ w != w$pushed_lockfiles ] ;then
 
   if [ w = w$is_allow_committer ]; then
     echo "you can't push those files: [ $pushed_lockfiles ] "
-    echo "those files lock committers: [ $allow_committers ]"
+    echo "those files limit committers: [ $allow_committers ]"
     exit 1
   fi
 fi
