@@ -16,6 +16,7 @@ chmod +x $f
 
 编辑 `pre-commit` 文件:
 ```sh
+# lock 文件,文件,文件 提交者,提交者
 lock .drone.yml,aa,cc shynome,nuome
 ```
 
