@@ -1,3 +1,5 @@
 #!/bin/sh
 
 lock .drone.yml,aa,cc shynome,nuome
+
+# end
