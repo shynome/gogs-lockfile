@@ -15,7 +15,9 @@ chmod +x $f
 # Usage
 
 编辑 `pre-commit` 文件:
-```sh
+```sh 
+#!/bin/sh 
+set -e
 # lock 文件,文件,文件 提交者,提交者
 lock .drone.yml,aa,cc shynome,nuome
 ```

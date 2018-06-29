@@ -27,7 +27,8 @@ done;
 if [ w != w$pushed_lockfiles ] ;then
 
   # 获取提交者
-  committer=$(git show -s --format='%cn' $newrev)
+  committer=$GOGS_AUTH_USER_NAME
+  if [ w = w$committer ]; then committer=$(git show -s --format='%cn' $newrev); fi
 
   is_allow_committer=$(echo ",${allow_committers}," | grep ",${committer},")
 

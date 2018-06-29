@@ -1,5 +1,5 @@
 #!/bin/sh
-
+set -e
 lock .drone.yml,aa,cc shynome,nuome
 
 # end
