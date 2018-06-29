@@ -2,7 +2,7 @@
 
 read refname oldrev newrev
 lockfiles=$1
-allow_committers=$2
+allow_pushers=$2
 
 updated_files=",$(git diff --name-only $oldrev $newrev $refname | tr '\n' ',')"
 
@@ -27,14 +27,14 @@ done;
 if [ w != w$pushed_lockfiles ] ;then
 
   # 获取提交者
-  committer=$GOGS_AUTH_USER_NAME
-  if [ w = w$committer ]; then committer=$(git show -s --format='%cn' $newrev); fi
+  pusher=$GOGS_AUTH_USER_NAME
+  if [ w = w$pusher ]; then pusher=$(git show -s --format='%cn' $newrev); fi
 
-  is_allow_committer=$(echo ",${allow_committers}," | grep ",${committer},")
+  is_allow_pusher=$(echo ",${allow_pushers}," | grep ",${pusher},")
 
-  if [ w = w$is_allow_committer ]; then
+  if [ w = w$is_allow_pusher ]; then
     echo "you can't push those files: [ $pushed_lockfiles ] "
-    echo "those files limit committers: [ $allow_committers ]"
+    echo "those files limit pushers: [ $allow_pushers ]"
     exit 1
   fi
 fi
