@@ -1,0 +1,40 @@
+#!/bin/sh
+
+read refname oldrev newrev
+lockfiles=$1
+allow_committers=$2
+
+updated_files=",$(git diff --name-only $oldrev $newrev $refname | tr '\n' ',')"
+
+pushed_lockfiles=""
+check () {
+  lockfile=$1
+
+  is_include_lockfiles=$(echo $updated_files | grep ",${lockfile},")
+  if [ w = w$is_include_lockfiles ]; then
+    return
+  fi
+
+  pushed_lockfiles=$lockfile,$pushed_lockfiles
+}
+
+for lockfile in $(echo $lockfiles | tr ',' ' ');
+do
+  check $lockfile
+done;
+
+# 如果提交的更新文件中有被锁定的文件时, 进入提交者判断
+if [ w != w$pushed_lockfiles ] ;then
+
+  # 获取提交者
+  committer=$(git show -s --format='%cn' $newrev)
+
+  is_allow_committer=$(echo ",${allow_committers}," | grep ",${committer},")
+
+  if [ w = w$is_allow_committer ]; then
+    echo "you can't push those files: [ $pushed_lockfiles ] "
+    echo "those files lock committers: [ $allow_committers ]"
+    exit 1
+  fi
+fi
+
