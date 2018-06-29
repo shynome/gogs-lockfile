@@ -1,9 +1,9 @@
 
 # install
 
-1. 下载 `lock` 文件
-2. 添加可执行权限 `chmod +x lock`
-3. 把 `lock` 文件移动到 `/usr/bin` 之类的环境变量目录下, 保证能够全局调用
+- 下载 `lock` 文件
+- 添加可执行权限 `chmod +x lock`
+- 把 `lock` 文件移动到 `/usr/bin` 之类的环境变量目录下, 保证能够全局调用
 
 命令行安装
 ```sh
