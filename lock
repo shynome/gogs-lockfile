@@ -1,10 +1,22 @@
 #!/bin/sh
 
-read refname oldrev newrev
+read  oldrev newrev
 lockfiles=$1
 allow_pushers=$2
+hr='----------------------------'
 
-updated_files=",$(git diff --name-only $oldrev $newrev $refname | tr '\n' ',')"
+for name in oldrev newrev lockfiles allow_pushers;
+do
+  value=$(eval "echo \$$name")
+  if [ w = w$value ]; then
+    echo $hr
+    echo "$name has no value, can't be continue"
+    echo $hr
+    exit 1
+  fi
+done
+
+updated_files=",$(git diff --name-only $oldrev $newrev | tr '\n' ',')"
 
 pushed_lockfiles=""
 check () {
@@ -27,14 +39,23 @@ done;
 if [ w != w$pushed_lockfiles ] ;then
 
   # 获取提交者
+  # pusher=$(git show -s --format='%cn' $newrev)
   pusher=$GOGS_AUTH_USER_NAME
-  if [ w = w$pusher ]; then pusher=$(git show -s --format='%cn' $newrev); fi
+
+  if [ w = w$pusher ]; then
+    echo $hr
+    echo "can't get pusher"
+    echo $hr
+    exit 1
+  fi
 
   is_allow_pusher=$(echo ",${allow_pushers}," | grep ",${pusher},")
 
   if [ w = w$is_allow_pusher ]; then
+    echo $hr
     echo "you can't push those files: [ $pushed_lockfiles ] "
-    echo "those files limit pushers: [ $allow_pushers ]"
+    echo "those files lock pushers: [ $allow_pushers ]"
+    echo $hr
     exit 1
   fi
 fi
