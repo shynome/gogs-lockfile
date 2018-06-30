@@ -8,7 +8,7 @@
 命令行安装
 ```sh
 f=/usr/bin/lock && \
-wget -O $f https://gist.github.com/shynome/7717d226ec50a123f02481bdcb7fe76b/raw/dc93484c181c6480eebf5b8894357900e66d9063/lock && \
+wget -O $f https://raw.githubusercontent.com/shynome/gogs-lockfile/master/lock && \
 chmod +x $f
 ```
 
