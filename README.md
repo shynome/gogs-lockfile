@@ -16,9 +16,12 @@ chmod +x $f
 
 编辑 `pre-commit` 文件:
 ```sh 
-#!/bin/sh 
+#!/bin/sh
 set -e
+# 读取 prev_commit_sha 和 next_commit_sha
+read  p n
 # lock 文件,文件,文件 提交者,提交者
-lock .drone.yml,aa,cc shynome,nuome
+echo $p $n | lock .drone.yml,aa,cc shynome,nuome
+echo $p $n | lock .drone.yml,aa,cc shynome,nuome
 ```
 
