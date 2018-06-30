@@ -5,16 +5,21 @@ lockfiles=$1
 allow_pushers=$2
 hr='----------------------------'
 
+# 检查变量
+lost_variable=""
 for name in oldrev newrev lockfiles allow_pushers;
 do
   value=$(eval "echo \$$name")
   if [ w = w$value ]; then
-    echo $hr
-    echo "$name has no value, can't be continue"
-    echo $hr
-    exit 1
+    lost_variable=$name,$lost_variable
   fi
 done
+if [ w != w$lost_variable ]; then
+  echo $hr
+  echo "variable [ $lost_variable ] has no value, can't be continue"
+  echo $hr
+  exit 1
+fi
 
 updated_files=",$(git diff --name-only $oldrev $newrev | tr '\n' ',')"
 
