@@ -1,6 +1,7 @@
 #!/bin/sh
 
-read  oldrev newrev
+# 最后一个变量会包含剩下的输入
+read  oldrev newrev input
 lockfiles=$1
 allow_pushers=$2
 hr='----------------------------'
@@ -24,20 +25,13 @@ fi
 updated_files=",$(git diff --name-only $oldrev $newrev | tr '\n' ',')"
 
 pushed_lockfiles=""
-check () {
-  lockfile=$1
-
+for lockfile in $(echo $lockfiles | tr ',' ' ');
+do
   is_include_lockfiles=$(echo $updated_files | grep ",${lockfile},")
   if [ w = w$is_include_lockfiles ]; then
     return
   fi
-
   pushed_lockfiles=$lockfile,$pushed_lockfiles
-}
-
-for lockfile in $(echo $lockfiles | tr ',' ' ');
-do
-  check $lockfile
 done;
 
 # 如果提交的更新文件中有被锁定的文件时, 进入提交者判断
