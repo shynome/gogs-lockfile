@@ -28,10 +28,9 @@ pushed_lockfiles=""
 for lockfile in $(echo $lockfiles | tr ',' ' ');
 do
   is_include_lockfiles=$(echo $updated_files | grep ",${lockfile},")
-  if [ w = w$is_include_lockfiles ]; then
-    return
+  if [ w != w$is_include_lockfiles ]; then
+    pushed_lockfiles=$lockfile,$pushed_lockfiles
   fi
-  pushed_lockfiles=$lockfile,$pushed_lockfiles
 done;
 
 # 如果提交的更新文件中有被锁定的文件时, 进入提交者判断
