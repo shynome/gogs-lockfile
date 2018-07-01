@@ -1,7 +1,6 @@
-#!/bin/sh
-set -e
+#!/bin/sh -e
 # 读取 prev_commit_sha 和 next_commit_sha
-read  p n
-# lock 文件,文件,文件 提交者,提交者
-echo $p $n | lock .drone.yml,aa,cc shynome,nuome
-echo $p $n | lock .drone.yml,aa,cc shynome,nuome
+read input
+# lock 文件,文件,1文件 提交者,提交者
+echo $input | lock .drone.yml,aa,cc shynome,nuome
+echo $input | lock .drone.yml,aa,cc shynome,nuome
