@@ -14,7 +14,7 @@ chmod +x $f
 
 # Usage
 
-编辑 `pre-commit` 文件:
+编辑 `pre-receive` 文件:
 ```sh 
 #!/bin/sh
 # set -e 出现错误立即退出
